@@ -1,7 +1,6 @@
 package co.simplon.web;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,50 +9,44 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class ConsulterCompte
  */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
+	//private BanqueMetier banqueMetier = null;
 	private static final long serialVersionUID = 1L;
-
+       
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public Controller() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String login = request.getParameter("txtLogin");
-		String password = request.getParameter("txtPassword");
-		if (login == null)	login = "";
-		if (password == null)	password = "";
-
-		HttpSession session = request.getSession(true);
-		session.setAttribute("login", login);
-		session.setAttribute("password", password);
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("txtLogin");
 		String password = request.getParameter("txtPassword");
-
-		HttpSession session = request.getSession(true);
-		session.setAttribute("login", login);
-		session.setAttribute("password", password);
-
-		if (login.equals("Sreyneang") && password.equals("999")) {
-			session.setAttribute("isConnectet", true);
-			request.getRequestDispatcher("/comptes.html").forward(request, response);
-		} else {
-			session.setAttribute("isConnectet", false);
-			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		
+		//je dois vérifier s'il login et password correspondent à qq en base de donné
+		//UserDao userDao = new UserDao();
+		
+		//User user = userDao.isValidLogin(login,password);
+		
+		//if(user != null) {
+		
+		if(login.equals("toto") && password.equals("123")) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", null);	
+			request.getRequestDispatcher("vue.jsp").forward(request, response);
 		}
+		else {
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+			
+		}
+			
 	}
 
 }
